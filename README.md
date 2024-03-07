@@ -38,22 +38,31 @@ for each wear category.</p>
 </p>
 ### Program:
 
-```python
+```
 from collections import defaultdict
 from itertools import combinations
 # Function to generate candidate k-item sequences
 def generate_candidates(dataset, k):
+    candidate_count = defaultdict(int)
 
+    for sequence in dataset:
+        for itemset in combinations(sequence, k):
+            candidate_count[itemset] += 1
 
-    /WRITE YOUR CODE HERE/
-
+    return candidate_count
 
 #Function to perform GSP algorithm
-def gsp(dataset, min_support):
+ def gsp(dataset, min_support):
+    frequent_patterns = defaultdict(int)
+    k = 1
+    candidate_count = generate_candidates(dataset, k)
+    frequent_patterns.update({itemset: count for itemset, count in candidate_count.items() if count >= min_support})
+    while candidate_count:
+        k += 1
+        candidate_count = generate_candidates(dataset, k)
+        frequent_patterns.update({itemset: count for itemset, count in candidate_count.items() if count >= min_support})
 
-
-  /WRITE YOUR CODE HERE/
-
+    return frequent_patterns
 
 #Example dataset for each category
 top_wear_data = [
@@ -101,7 +110,10 @@ if party_wear_result:
 else:
  print("No frequent sequential patterns found in Party Wear.")
 ```
-### Output:
+### Output:.
+
+![310811797-604d1e7f-41ca-44f6-afaa-d6e115b7203c](https://github.com/MIRUDHULA-DHANARAJ/WDM_EXP3/assets/94828147/5f67f004-c8c6-430b-a912-6e9b6caf87ed)
+
 
 ### Visualization:
 ```python
@@ -131,5 +143,12 @@ visualize_patterns_line(party_wear_result, 'Party Wear')
 ```
 ### Output:
 
+![310811685-3881fc21-4a8c-4fd0-9c83-3f6bea166b2f](https://github.com/MIRUDHULA-DHANARAJ/WDM_EXP3/assets/94828147/8e2cb1ca-be1c-4b48-922a-ea994b7312f2)
+
+
+![310811743-f1496db8-bada-43e0-bef9-cddf367b2a45](https://github.com/MIRUDHULA-DHANARAJ/WDM_EXP3/assets/94828147/f2e9d0a6-29d0-463d-b88d-228a0d1eb725)
+
 
 ### Result:
+Thus, the Implementation of GSP Algorithm In Python has been succesfully executed.
+
